@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(ttf2png)
+project(ttf2bmp)
 
 include(FetchContent)
 
