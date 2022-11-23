@@ -7,7 +7,7 @@
 #include "stb_image_write.h"
 
 int main(int argc, char* argv[]) {
-  if (argc < 1) return 0;
+  if (argc <= 1) return 0;
 
   FT_Error err;
   FT_Library lib;
@@ -30,8 +30,10 @@ int main(int argc, char* argv[]) {
 
   auto glyph = face->glyph;
   auto bitmap = glyph->bitmap;
-  auto r =
-      stbi_write_bmp("output.bmp", bitmap.width, bitmap.rows, 1, bitmap.buffer);
+  auto adv_x = glyph->advance.x >> 6;  // 1/64 of pixels.
+  if (bitmap.width > 0 && bitmap.rows > 0) {
+    stbi_write_bmp("output.bmp", bitmap.width, bitmap.rows, 1, bitmap.buffer);
+  }
 
   FT_Done_Face(face);
   FT_Done_FreeType(lib);
